@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ishika ❤️ Abhay</title>
+<style>
+:root{--pink:#ff3f87;--rose:#b91f5d;--soft:#fff1f7;--ink:#5d1839}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+body{overflow:hidden;color:var(--ink);background:radial-gradient(circle at 10% 10%,#fff 0 8%,transparent 25%),radial-gradient(circle at 90% 85%,#ffd0e3 0 10%,transparent 28%),linear-gradient(135deg,#ffd8e8,#fff4f8 48%,#ffc6dc)}
+canvas{position:fixed;inset:0;pointer-events:none}.glow{position:fixed;width:360px;height:360px;border-radius:50%;background:#ff70a6;filter:blur(100px);opacity:.18;left:-120px;top:35%}
+.app{min-height:100vh;display:grid;place-items:center;padding:18px}.card{position:relative;width:min(94vw,560px);min-height:650px;max-height:94vh;overflow:auto;border:1px solid rgba(255,255,255,.9);border-radius:38px;padding:30px 24px;background:rgba(255,255,255,.64);backdrop-filter:blur(22px);box-shadow:0 30px 90px rgba(139,30,78,.23);text-align:center}
+.badge{display:inline-flex;gap:7px;align-items:center;padding:8px 14px;border-radius:99px;background:rgba(255,255,255,.7);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#a52b5f}
+.teddy{font-size:100px;line-height:1;margin:22px 0 12px;filter:drop-shadow(0 12px 12px rgba(125,30,75,.18));animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(2deg)}}
+h1{font-size:clamp(32px,8vw,50px);line-height:1.03;margin:8px 0 14px;color:var(--rose)}h2{font-size:28px;margin:10px 0;color:#8f2453}
+p{font-size:16px;line-height:1.6;margin:10px auto;max-width:430px}
+.btn{border:0;border-radius:18px;padding:15px 22px;margin:8px;font-size:16px;font-weight:850;cursor:pointer;transition:.2s;box-shadow:0 10px 24px rgba(153,30,82,.16)}
+.btn:hover{transform:translateY(-3px) scale(1.02)}.primary{background:linear-gradient(135deg,#ff3f87,#ff76aa);color:white}.ghost{background:white;color:#a32159}
+.hidden{display:none!important}.choices{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:22px}.choice{margin:0;background:rgba(255,255,255,.82);border:2px solid #ffd0e0;color:#7c2049;min-height:90px;font-size:16px}.choice span{display:block;font-size:35px;margin-bottom:5px}.choice.selected{border-color:#ff4f91;background:#ffe5ef}
+.no{background:white;color:#b52360;border:2px solid #ff7ca9;position:relative}
+.progress{display:flex;gap:6px;justify-content:center;margin:18px 0}.dot{width:8px;height:8px;border-radius:50%;background:#ffd0df}.dot.on{width:25px;background:#ff4f91}
+.quote{font-style:italic;color:#9a4a70;margin-top:20px}
+.meter{height:28px;border-radius:99px;background:#ffe1ec;padding:4px;margin:18px auto;max-width:430px}.fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#ff3f87,#ff9fc2);transition:width 1.7s}
+.percent{font-size:42px;font-weight:950;color:#bd205f}
+.prize{margin-top:20px;padding:20px;border-radius:26px;background:linear-gradient(145deg,#fff,#fff0f6);border:1px solid #ffc1d7;box-shadow:inset 0 0 30px rgba(255,91,145,.08)}
+.phone{font-size:28px;font-weight:900;color:#b51d5c;letter-spacing:1px}.tiny{font-size:12px;color:#9c6480}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;background:#621b40;color:white;padding:12px 18px;border-radius:99px;font-size:13px;transition:.3s;z-index:10}.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas><div class="glow"></div><div class="toast" id="toast">Made with love for Ishika ❤️</div>
+<div class="app"><main class="card">
+<div class="badge">💌 A little surprise for Ishika</div>
+<div class="progress" id="progress"></div>
+
+<section id="s0">
+<div class="teddy">🧸💗</div><h1>Ishika,<br>this is for you.</h1>
+<p>Abhay has prepared a tiny love quiz… but there may be a few surprises along the way. 😌💕</p>
+<button class="btn primary" onclick="start()">Open My Surprise ✨</button>
+<p class="quote">“Some people make ordinary days feel special.”</p>
+</section>
+
+<section id="s1" class="hidden">
+<div class="teddy">🧸🎀</div><h2>Do you like Abhay? ❤️</h2><p>Be honest… although I've made the options slightly unfair. 😏</p>
+<button class="btn primary" onclick="answer(2)">YES, obviously ❤️</button>
+<button class="btn no" id="no">NO 🙈</button>
+</section>
+
+<section id="s2" class="hidden">
+<div class="teddy">🏍️💞🚗</div><h2>Our perfect date?</h2><p>Choose the vibe for our little adventure.</p>
+<div class="choices"><button class="btn choice" onclick="choose(this,3)"><span>🏍️</span>Romantic Bike Ride</button><button class="btn choice" onclick="choose(this,3)"><span>🚗</span>Long Car Drive</button></div>
+</section>
+
+<section id="s3" class="hidden">
+<div class="teddy">🍕💕🍔</div><h2>One very serious question 😋</h2><p>What are we ordering?</p>
+<div class="choices"><button class="btn choice" onclick="choose(this,4)"><span>🍕</span>Pizza</button><button class="btn choice" onclick="choose(this,4)"><span>🍔</span>Burger</button></div>
+</section>
+
+<section id="s4" class="hidden">
+<div class="teddy">🥰💗</div><h2>Pick the perfect moment</h2><p>Which one sounds more like us?</p>
+<div class="choices"><button class="btn choice" onclick="choose(this,5)"><span>🤗</span>Tight Hug</button><button class="btn choice" onclick="choose(this,5)"><span>🤝</span>Walk Holding Hands</button></div>
+</section>
+
+<section id="s5" class="hidden">
+<div class="teddy">🧸💖</div><h1>It's Official! 💕</h1><h2>Abhay + Ishika</h2><p>You are a <b>PERFECT MATCH</b>.</p>
+<div class="meter"><div class="fill" id="fill"></div></div><div class="percent" id="percent">0%</div>
+<p>Love Meter ✨</p>
+<div class="prize"><h2>🏆 You Have Won Your Winning Prize 🏆</h2><p>A lifetime supply of love, hugs &amp; beautiful memories. ❤️</p><p>With love,</p><h2>Abhay 💗</h2><div class="phone">8445100189</div></div>
+<p class="tiny">Screenshot this result if you want to keep it forever. 🌸</p>
+</section>
+</main></div>
+
+<script>
+const total=5, progress=document.getElementById('progress');
+function dots(n){progress.innerHTML='';for(let i=1;i<=total;i++){let d=document.createElement('i');d.className='dot '+(i<=n?'on':'');progress.appendChild(d)}}
+function show(n){for(let i=0;i<=5;i++)document.getElementById('s'+i).classList.add('hidden');document.getElementById('s'+n).classList.remove('hidden');dots(n);window.scrollTo(0,0)}
+function start(){show(1);tone(660);toast('Okay Ishika… here we go 💗')}
+function answer(n){show(n);tone(880)}
+function choose(btn,n){btn.classList.add('selected');tone(740);setTimeout(()=>show(n),300)}
+dots(0);
+
+const no=document.getElementById('no');
+function escapeNo(){
+ const x=20+Math.random()*Math.max(20,innerWidth-no.offsetWidth-40);
+ const y=80+Math.random()*Math.max(20,innerHeight-no.offsetHeight-120);
+ no.style.position='fixed';no.style.left=x+'px';no.style.top=y+'px';
+ toast('Hehe… try YES 😌❤️');
+}
+['pointerenter','pointerdown','touchstart'].forEach(e=>no.addEventListener(e,escapeNo));
+
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1700)}
+let ac;
+function tone(freq){try{ac??=new AudioContext();let o=ac.createOscillator(),g=ac.createGain();o.frequency.value=freq;o.type='sine';g.gain.setValueAtTime(.0001,ac.currentTime);g.gain.exponentialRampToValueAtTime(.07,ac.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.25);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+.27)}catch(e){}}
+
+function finale(){
+ setTimeout(()=>document.getElementById('fill').style.width='100%',250);
+ let n=0;const el=document.getElementById('percent');const t=setInterval(()=>{n++;el.textContent=n+'%';if(n>=100){clearInterval(t);celebrate();}},18);
+}
+const oldShow=show;show=function(n){oldShow(n);if(n===5)finale()};
+
+const c=document.getElementById('fx'),ctx=c.getContext('2d');let bits=[];
+function resize(){c.width=innerWidth;c.height=innerHeight}addEventListener('resize',resize);resize();
+function celebrate(){for(let i=0;i<150;i++)bits.push({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-.5)*10,vy:(Math.random()-.8)*12,r:2+Math.random()*5,life:90+Math.random()*80});}
+function loop(){ctx.clearRect(0,0,c.width,c.height);bits=bits.filter(b=>b.life-- >0);bits.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.vy+=.12;ctx.fillStyle=`hsl(${330+Math.random()*35},90%,70%)`;ctx.fillRect(b.x,b.y,b.r,b.r)});requestAnimationFrame(loop)}loop();
+</script>
+</body>
+</html>
